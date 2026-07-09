@@ -7,7 +7,7 @@ plugins {
 android {
     namespace = "com.cabovianco.kis"
     compileSdk {
-        version = release(36) {
+        version = release(37) {
             minorApiLevel = 1
         }
     }
@@ -15,9 +15,9 @@ android {
     defaultConfig {
         applicationId = "com.cabovianco.kis"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
