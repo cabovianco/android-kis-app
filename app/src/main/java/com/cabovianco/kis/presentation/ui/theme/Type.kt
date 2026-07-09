@@ -13,6 +13,21 @@ private val defaultFont = FontFamily(
 )
 
 val Typography = Typography(
+    headlineLarge = TextStyle(
+        fontFamily = defaultFont,
+        fontWeight = FontWeight.Bold,
+        fontSize = 32.sp
+    ),
+    headlineMedium = TextStyle(
+        fontFamily = defaultFont,
+        fontWeight = FontWeight.Bold,
+        fontSize = 28.sp
+    ),
+    headlineSmall = TextStyle(
+        fontFamily = defaultFont,
+        fontWeight = FontWeight.Bold,
+        fontSize = 24.sp
+    ),
     titleLarge = TextStyle(
         fontFamily = defaultFont,
         fontWeight = FontWeight.Bold,
