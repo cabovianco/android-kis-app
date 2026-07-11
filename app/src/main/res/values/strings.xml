@@ -14,4 +14,12 @@
     <string name="register_username_placeholder">Username</string>
     <string name="register_sign_up_button">Sign up</string>
     <string name="register_login_prompt">Already have an account?</string>
+    
+    <string name="inbox_title">Inbox</string>
+    <string name="inbox_section_title">PENDING</string>
+    <string name="inbox_preview_description">This secret can only be opened once.\nAfter opening, it will be permanently deleted.</string>
+    <string name="inbox_open_secret_button">Open Secret</string>
+    <string name="inbox_cancel_button">Cancel</string>
+    <string name="inbox_close_button">Close Forever</string>
+    <string name="inbox_empty_message">No secrets yet</string>
 </resources>
