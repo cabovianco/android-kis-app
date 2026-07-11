@@ -11,14 +11,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.cabovianco.kis.R
@@ -27,7 +25,7 @@ import com.cabovianco.kis.presentation.ui.screen.auth.shared.EmailTextField
 import com.cabovianco.kis.presentation.ui.screen.auth.shared.PasswordTextField
 import com.cabovianco.kis.presentation.ui.screen.shared.AppPrimaryButton
 import com.cabovianco.kis.presentation.ui.screen.shared.AppTextButton
-import com.cabovianco.kis.presentation.ui.screen.shared.AppTextField
+import com.cabovianco.kis.presentation.ui.screen.shared.UsernameTextField
 
 @Composable
 fun RegisterScreen(onLoginClick: () -> Unit, modifier: Modifier = Modifier) {
@@ -115,26 +113,6 @@ private fun Form(
         UsernameTextField(username = username, onUsernameChange = onUsernameChange)
         PasswordTextField(password = password, onPasswordChange = onPasswordChange)
     }
-}
-
-@Composable
-private fun UsernameTextField(
-    username: String,
-    onUsernameChange: (String) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    AppTextField(
-        modifier = modifier.fillMaxWidth(),
-        value = username,
-        onValueChange = onUsernameChange,
-        placeholder = stringResource(R.string.register_username_placeholder),
-        leadingIcon = {
-            Icon(
-                painter = painterResource(R.drawable.username),
-                contentDescription = null
-            )
-        }
-    )
 }
 
 @Composable
