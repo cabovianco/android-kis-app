@@ -26,4 +26,10 @@
     <string name="compose_title">Create Secret</string>
     <string name="compose_send_secret_button">Send</string>
     <string name="compose_secret_content_placeholder">Type your secret here…</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="settings_account_menu_title">Account</string>
+    <string name="settings_account_menu_notification_option">Push notifications</string>
+    <string name="settings_account_menu_logout_option">Logout</string>
+    <string name="settings_account_menu_delete_option">Delete account</string>
 </resources>
