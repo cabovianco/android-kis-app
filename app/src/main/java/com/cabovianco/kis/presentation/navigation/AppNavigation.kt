@@ -3,7 +3,10 @@ package com.cabovianco.kis.presentation.navigation
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -12,15 +15,18 @@ import com.cabovianco.kis.presentation.ui.screen.InboxScreen
 import com.cabovianco.kis.presentation.ui.screen.SettingsScreen
 import com.cabovianco.kis.presentation.ui.screen.auth.LoginScreen
 import com.cabovianco.kis.presentation.ui.screen.auth.RegisterScreen
+import com.cabovianco.kis.presentation.viewmodel.RootViewModel
 
 @Composable
 fun AppNavigation(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
+    val rootViewModel = hiltViewModel<RootViewModel>()
+    val startDestination by rootViewModel.startDestination.collectAsState()
 
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = Screen.Inbox, //Screen.Auth.Login,
+        startDestination = startDestination,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None }
     ) {
