@@ -58,9 +58,9 @@ fun InboxScreen(
     ) {
         InboxContent(
             items = listOf(
-                SecretItem(uuid = "1", content = "Secret 1", from = "Person 1"),
-                SecretItem(uuid = "2", content = "Secret 2", from = "Person 2"),
-                SecretItem(uuid = "3", content = "Secret 3", from = "Person 3"),
+                SecretItem(content = "Secret 1", from = "Person 1"),
+                SecretItem(content = "Secret 2", from = "Person 2"),
+                SecretItem(content = "Secret 3", from = "Person 3"),
             ),
             modifier = Modifier
                 .padding(it)
