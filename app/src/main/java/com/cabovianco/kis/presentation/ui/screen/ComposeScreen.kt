@@ -17,34 +17,49 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.cabovianco.kis.R
+import com.cabovianco.kis.presentation.state.ComposeState
 import com.cabovianco.kis.presentation.ui.screen.shared.AppPrimaryButton
 import com.cabovianco.kis.presentation.ui.screen.shared.AppTextField
 import com.cabovianco.kis.presentation.ui.screen.shared.UsernameTextField
+import com.cabovianco.kis.presentation.viewmodel.ComposeViewModel
 
 @Composable
 fun ComposeScreen(
     onNavBack: () -> Unit,
-    onComposeAndSendClick: () -> Unit,
+    viewModel: ComposeViewModel,
     modifier: Modifier = Modifier
 ) {
+    val uiState by viewModel.uiState.collectAsState()
+
     Scaffold(
         modifier = modifier,
         topBar = { TopBar(onNavBack = onNavBack) },
-        bottomBar = { ComposeAndSendSecretButton(onClick = onComposeAndSendClick) }
+        bottomBar = {
+            if (uiState.composeState is ComposeState.Success) onNavBack()
+
+            ComposeAndSendSecretButton(
+                text = if (uiState.composeState is ComposeState.Sending) stringResource(R.string.compose_send_secret_in_progress)
+                else stringResource(R.string.compose_send_secret_button),
+                onClick = { viewModel.composeAndSend() },
+                enabled = uiState.composeState !is ComposeState.Sending
+            )
+        }
     ) {
         ComposeContent(
             modifier = Modifier
                 .padding(it)
                 .padding(16.dp),
-            username = "",
-            content = "",
-            onUsernameChange = {},
-            onContentChange = {}
+            username = uiState.username,
+            content = uiState.content,
+            onUsernameChange = { username -> viewModel.onUsernameChange(username) },
+            onContentChange = { content -> viewModel.onContentChange(content) }
         )
     }
 }
@@ -119,14 +134,20 @@ private fun TopBar(onNavBack: () -> Unit, modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun ComposeAndSendSecretButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+private fun ComposeAndSendSecretButton(
+    text: String,
+    enabled: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     AppPrimaryButton(
         modifier = modifier
             .fillMaxWidth()
             .windowInsetsPadding(WindowInsets.navigationBars)
             .padding(16.dp)
             .height(64.dp),
-        text = stringResource(R.string.compose_send_secret_button),
-        onClick = onClick
+        text = text,
+        onClick = onClick,
+        enabled = enabled
     )
 }

@@ -17,6 +17,7 @@ import com.cabovianco.kis.presentation.ui.screen.InboxScreen
 import com.cabovianco.kis.presentation.ui.screen.SettingsScreen
 import com.cabovianco.kis.presentation.ui.screen.auth.LoginScreen
 import com.cabovianco.kis.presentation.ui.screen.auth.RegisterScreen
+import com.cabovianco.kis.presentation.viewmodel.ComposeViewModel
 import com.cabovianco.kis.presentation.viewmodel.LoginViewModel
 import com.cabovianco.kis.presentation.viewmodel.RegisterViewModel
 import com.cabovianco.kis.presentation.viewmodel.RootViewModel
@@ -64,9 +65,11 @@ fun AppNavigation(modifier: Modifier = Modifier) {
         }
 
         composable<Screen.Compose> {
+            val viewModel = hiltViewModel<ComposeViewModel>()
+
             ComposeScreen(
                 onNavBack = { navController.navigateUp() },
-                onComposeAndSendClick = { navController.navigateUp() }
+                viewModel = viewModel
             )
         }
 
