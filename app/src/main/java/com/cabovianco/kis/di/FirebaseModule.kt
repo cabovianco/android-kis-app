@@ -1,6 +1,9 @@
 package com.cabovianco.kis.di
 
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,4 +16,8 @@ object FirebaseModule {
     @Provides
     @Singleton
     fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
+
+    @Provides
+    @Singleton
+    fun provideFirebaseFirestore(): FirebaseFirestore = Firebase.firestore
 }
