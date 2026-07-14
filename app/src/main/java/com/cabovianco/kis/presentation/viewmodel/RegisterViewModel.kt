@@ -31,7 +31,7 @@ class RegisterViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(authState = AuthState.Loading) }
 
-            signUpUseCase(_uiState.value.email, _uiState.value.password)
+            signUpUseCase(_uiState.value.email, _uiState.value.username, _uiState.value.password)
                 .onSuccess { signIn() }
                 .onFailure { error ->
                     _uiState.update {

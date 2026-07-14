@@ -8,9 +8,9 @@ private const val PASSWORD_LENGTH = 6
 class SignUpUseCase @Inject constructor(
     private val authRepository: AuthRepository
 ) {
-    suspend operator fun invoke(email: String, password: String): Result<Unit> {
+    suspend operator fun invoke(email: String, username: String, password: String): Result<Unit> {
         return if (password.length < PASSWORD_LENGTH)
             Result.failure(Exception("Password must be at least $PASSWORD_LENGTH characters long"))
-        else authRepository.signUpWithEmailAndPassword(email, password)
+        else authRepository.signUpWithEmailAndPassword(email, username, password)
     }
 }
