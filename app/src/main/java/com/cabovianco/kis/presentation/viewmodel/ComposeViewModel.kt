@@ -48,7 +48,7 @@ class ComposeViewModel @Inject constructor(
 
         return Result.success(
             SecretComposeItem(
-                username = _uiState.value.username,
+                to = _uiState.value.username,
                 content = _uiState.value.content
             )
         )
