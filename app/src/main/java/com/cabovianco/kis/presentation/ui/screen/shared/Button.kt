@@ -14,11 +14,17 @@ import androidx.compose.ui.unit.dp
 private val AppButtonShape = RoundedCornerShape(16.dp)
 
 @Composable
-fun AppPrimaryButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun AppPrimaryButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true
+) {
     AppButton(
         modifier = modifier,
         text = text,
         onClick = onClick,
+        enabled = enabled,
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.inverseSurface,
             contentColor = MaterialTheme.colorScheme.inverseOnSurface
@@ -27,11 +33,17 @@ fun AppPrimaryButton(text: String, onClick: () -> Unit, modifier: Modifier = Mod
 }
 
 @Composable
-fun AppSecondaryButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun AppSecondaryButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true
+) {
     AppButton(
         modifier = modifier,
         text = text,
         onClick = onClick,
+        enabled = enabled,
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainer,
             contentColor = MaterialTheme.colorScheme.onSecondaryContainer
@@ -44,11 +56,13 @@ private fun AppButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     colors: ButtonColors = ButtonDefaults.buttonColors()
 ) {
     Button(
         modifier = modifier,
         onClick = onClick,
+        enabled = enabled,
         shape = AppButtonShape,
         colors = colors
     ) {
