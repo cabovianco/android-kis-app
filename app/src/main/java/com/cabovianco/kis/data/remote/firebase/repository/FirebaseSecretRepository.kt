@@ -7,9 +7,7 @@ import com.cabovianco.kis.domain.model.SecretComposeItem
 import com.cabovianco.kis.domain.repository.SecretRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 private const val TAG = "FirebaseSecretRepository"
