@@ -7,4 +7,5 @@ import kotlinx.coroutines.flow.Flow
 interface SecretRepository {
     suspend fun send(secret: SecretComposeItem): Result<Unit>
     fun getAll(): Flow<Result<List<SecretItem>>>
+    suspend fun delete(secret: SecretItem)
 }
