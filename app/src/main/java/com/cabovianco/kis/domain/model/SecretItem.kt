@@ -1,6 +1,7 @@
 package com.cabovianco.kis.domain.model
 
 data class SecretItem(
+    val id: String,
     val content: String,
     val from: String
 )

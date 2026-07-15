@@ -8,9 +8,9 @@ import com.cabovianco.kis.domain.model.SecretItem
 import com.cabovianco.kis.domain.repository.SecretRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -36,48 +36,74 @@ class FirebaseSecretRepository @Inject constructor(
                 .collection(Collection.RECEIVED.path)
                 .add(secret)
                 .addOnSuccessListener {
-                    Log.i(TAG, "Secret sent successfully")
+                    Log.i(TAG, "send:onSuccess")
                 }
                 .addOnFailureListener {
-                    Log.i(TAG, " Failed to send secret: ${it.message}")
+                    Log.i(TAG, "send:onFailure")
                 }
                 .await()
 
             Result.success(Unit)
 
         } catch (ex: Exception) {
-            Log.e(TAG, "Failed to send secret", ex)
-            Result.failure(ex)
+            Log.e(TAG, "send:onException", ex)
+            Result.failure(Exception("An error occurred while sending the secret"))
         }
     }
 
-    override fun getAll(): Flow<Result<List<SecretItem>>> = flow {
-        emit(
-            try {
-                val username = findUsername()
+    override fun getAll(): Flow<Result<List<SecretItem>>> = callbackFlow {
+        val username = try {
+            findUsername()
+        } catch (ex: Exception) {
+            Log.e(TAG, "getAll:onFindUsernameException", ex)
+            trySend(Result.failure(ex))
+            return@callbackFlow
+        }
 
-                val snapshot = firestore.collection(Collection.INBOX.path)
-                    .document(username)
-                    .collection(Collection.RECEIVED.path)
-                    .get()
-                    .await()
+        val listener = firestore.collection(Collection.INBOX.path)
+            .document(username)
+            .collection(Collection.RECEIVED.path)
+            .addSnapshotListener { snapshots, exception ->
+                if (exception != null) {
+                    Log.e(TAG, "getAll:onSnapshotException", exception)
+                    trySend(Result.failure(exception))
+                    return@addSnapshotListener
+                }
 
-                val items = snapshot.documents.map {
+                val items = snapshots?.documents?.map {
                     SecretItem(
+                        id = it.id,
                         content = it.getString("content") ?: "",
                         from = it.getString("from") ?: ""
                     )
-                }
+                } ?: emptyList()
 
-                Log.i(TAG, "Fetched ${items.size} secrets for user $username")
-
-                Result.success(items)
-
-            } catch (ex: Exception) {
-                Log.e(TAG, "Failed to fetch secrets", ex)
-                Result.failure(ex)
+                trySend(Result.success(items))
             }
-        )
+
+        awaitClose { listener.remove() }
+    }
+
+    override suspend fun delete(secret: SecretItem) {
+        try {
+            val username = findUsername()
+
+            firestore.collection(Collection.INBOX.path)
+                .document(username)
+                .collection(Collection.RECEIVED.path)
+                .document(secret.id)
+                .delete()
+                .addOnSuccessListener {
+                    Log.i(TAG, "delete:onSuccess")
+                }
+                .addOnFailureListener {
+                    Log.i(TAG, "delete:onFailure")
+                }
+                .await()
+
+        } catch (ex: Exception) {
+            Log.e(TAG, "delete:onException", ex)
+        }
     }
 
     private suspend fun findUsername(): String {
