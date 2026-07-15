@@ -36,7 +36,7 @@ class FirebaseAuthRepository @Inject constructor(
             Result.success(Unit)
 
         } catch (ex: Exception) {
-            Log.e(TAG, "signInWithEmailAndPassword:onFailure", ex)
+            Log.e(TAG, "signInWithEmailAndPassword:onException", ex)
             Result.failure(Exception("Failed to sign in with email and password"))
         }
     }
@@ -77,8 +77,19 @@ class FirebaseAuthRepository @Inject constructor(
             Result.success(Unit)
 
         } catch (ex: Exception) {
-            Log.e(TAG, "createUserWithEmailAndPassword:onFailure", ex)
+            Log.e(TAG, "createUserWithEmailAndPassword:onException", ex)
             Result.failure(Exception("Failed to sign up with email and password"))
+        }
+    }
+
+    override suspend fun signOut(): Result<Unit> {
+        return try {
+            auth.signOut()
+            Result.success(Unit)
+
+        } catch (ex: Exception) {
+            Log.e(TAG, "signOut:onException", ex)
+            Result.failure(Exception("Failed to sign out"))
         }
     }
 }
