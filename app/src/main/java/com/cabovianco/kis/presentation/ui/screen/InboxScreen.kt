@@ -67,6 +67,7 @@ fun InboxScreen(
                 is InboxUiState.Success -> (uiState as InboxUiState.Success).items
                 else -> emptyList()
             },
+            onCloseForever = { viewModel.onCloseForever(it) },
             modifier = Modifier
                 .padding(it)
                 .padding(16.dp)
@@ -75,7 +76,11 @@ fun InboxScreen(
 }
 
 @Composable
-private fun InboxContent(items: List<SecretItem>, modifier: Modifier = Modifier) {
+private fun InboxContent(
+    items: List<SecretItem>,
+    onCloseForever: (SecretItem) -> Unit,
+    modifier: Modifier = Modifier
+) {
     var isSecretPreviewOpen by rememberSaveable { mutableStateOf(false) }
     var isSecretOpen by rememberSaveable { mutableStateOf(false) }
     var selectedSecret by rememberSaveable { mutableStateOf<SecretItem?>(null) }
@@ -99,6 +104,8 @@ private fun InboxContent(items: List<SecretItem>, modifier: Modifier = Modifier)
             secretItem = it,
             isPreviewOpen = isSecretPreviewOpen,
             onDismissRequest = {
+                if (isSecretOpen) onCloseForever(selectedSecret!!)
+
                 isSecretPreviewOpen = false
                 isSecretOpen = false
                 selectedSecret = null
