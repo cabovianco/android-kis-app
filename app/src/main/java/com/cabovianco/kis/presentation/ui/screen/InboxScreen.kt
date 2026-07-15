@@ -39,29 +39,34 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.cabovianco.kis.R
 import com.cabovianco.kis.domain.model.SecretItem
+import com.cabovianco.kis.presentation.state.InboxUiState
 import com.cabovianco.kis.presentation.ui.screen.shared.AppBottomSheet
 import com.cabovianco.kis.presentation.ui.screen.shared.AppPrimaryButton
 import com.cabovianco.kis.presentation.ui.screen.shared.AppSecondaryButton
+import com.cabovianco.kis.presentation.viewmodel.InboxViewModel
 
 @Composable
 fun InboxScreen(
     onSettingsActionClick: () -> Unit,
     onComposeSecretFloatingActionClick: () -> Unit,
+    viewModel: InboxViewModel,
     modifier: Modifier = Modifier
 ) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
     Scaffold(
         modifier = modifier,
         topBar = { TopBar(onSettingsActionClick = onSettingsActionClick) },
         floatingActionButton = { ComposeSecretFloatingAction(onClick = onComposeSecretFloatingActionClick) }
     ) {
         InboxContent(
-            items = listOf(
-                SecretItem(content = "Secret 1", from = "Person 1"),
-                SecretItem(content = "Secret 2", from = "Person 2"),
-                SecretItem(content = "Secret 3", from = "Person 3"),
-            ),
+            items = when (uiState) {
+                is InboxUiState.Success -> (uiState as InboxUiState.Success).items
+                else -> emptyList()
+            },
             modifier = Modifier
                 .padding(it)
                 .padding(16.dp)
