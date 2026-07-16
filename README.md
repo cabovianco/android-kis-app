@@ -4,6 +4,7 @@ KIS is an ephemeral messaging app designed to send "secrets" that are automatica
 It ensures that messages do not remain stored in the database after being consumed by the recipient.
 
 ## Features
+
 - **Registration and Login:** User authentication using email and password.
 - **Username Identification:** Users are identified by a username to receive secrets.
 - **Send Secrets:** Interface to compose and send direct messages to other users.
@@ -11,6 +12,7 @@ It ensures that messages do not remain stored in the database after being consum
 - **Single Read (Self-Destruct):** Secrets are permanently deleted from the database immediately after being opened and closed by the recipient.
 
 ## Screenshots
+
 |                                              |                                              |
 |:--------------------------------------------:|:--------------------------------------------:|
 | ![Screenshot-1](assets/img/Screenshot-1.jpg) | ![Screenshot-2](assets/img/Screenshot-2.jpg) |
@@ -19,7 +21,9 @@ It ensures that messages do not remain stored in the database after being consum
 | ![Screenshot-7](assets/img/Screenshot-7.jpg) |                                              |
 
 ## Installation
+
 ### From Source Code
+
 1. Clone this repository:
     ```bash
     git clone https://github.com/cabovianco/android-kis-app.git
@@ -29,6 +33,7 @@ It ensures that messages do not remain stored in the database after being consum
 4. Build and run the app on your device or emulator.
 
 ## Technologies
+
 - **Platform & Language:** Android, Kotlin.
 - **Architecture:** Clean Architecture, MVVM, UDF (Unidirectional Data Flow).
 - **UI:** Jetpack Compose, Material 3.
@@ -38,6 +43,7 @@ It ensures that messages do not remain stored in the database after being consum
 - **Navigation:** Navigation Compose.
 
 ## App Structure
+
 The app follows **Clean Architecture** principles, organized into the following package structure:
 
 ```text
@@ -66,9 +72,11 @@ com.cabovianco.kis
 ```
 
 ## Firebase Data Modeling
+
 The Firestore structure is organized as follows:
 
 ### `users` Collection
+
 Stores profile information for each registered user.
 - **Document ID:** Firebase Auth UID.
 - **Fields:**
@@ -76,6 +84,7 @@ Stores profile information for each registered user.
     - `username`: Alias used to receive secrets.
 
 ### `inboxes` Collection
+
 Manages messages received for each username.
 - **Document ID:** Recipient's `username`.
 - **`received` Sub-collection:** Contains individual secrets.
@@ -85,4 +94,5 @@ Manages messages received for each username.
         - `from`: The sender's `username`.
 
 ## License
+
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
