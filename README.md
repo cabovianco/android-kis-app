@@ -35,7 +35,7 @@ It ensures that messages do not remain stored in the database after being consum
 ## Technologies
 
 - **Language:** Kotlin.
-- **Architecture:** MVVM, Clean Architecture, UDF.
+- **Architecture:** MVVM, Clean Architecture.
 - **UI:** Jetpack Compose, Material Design 3, Navigation Compose.
 - **Firebase:** Authentication, Cloud Firestore, Crashlytics.
 - **Asynchronous & Data:** Kotlin Coroutines, Kotlin Flow, Kotlin Serialization.
