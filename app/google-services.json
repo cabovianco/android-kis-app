@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "757051203410",
+    "project_id": "keep-it-secret-5001d",
+    "storage_bucket": "keep-it-secret-5001d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757051203410:android:c5ad079f08fb657a46a48b",
+        "android_client_info": {
+          "package_name": "com.cabovianco.kis"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAn9bLWL0w99_bQqthQj6jKc7ffMMtfF_I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
